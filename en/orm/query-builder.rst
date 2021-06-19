@@ -203,6 +203,27 @@ re-evaluating a query will result in additional SQL being run.
 If you want to take a look at what SQL CakePHP is generating, you can turn
 database :ref:`query logging <database-query-logging>` on.
 
+.. warning::
+
+    When calling the same unmodified query will return the same instance referenced to each other. To create a separate instance, the query needs to be modified
+    
+Calling the same unmodified query will return the same referenced instance::
+
+    $query = $articles->find();
+    $result = $query->first();
+
+    // Outputs 'My First Article'
+    echo $result->title;
+
+    // Modify the title
+    $result->title = 'My Modified Article';
+
+    $result = $query->first();
+
+    // Outputs 'My Modified Article'
+    echo $result->title;
+
+
 Selecting Data
 ==============
 
